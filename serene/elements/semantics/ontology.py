@@ -519,7 +519,10 @@ class RDFReader(object):
         # we guess format
         fmt = rdflib.util.guess_format(filename)
         logging.debug("Loading ontology {} with the format {}".format(filename, fmt))
-        g.load(filename, format=fmt)
+        try:
+            g.load(filename, format=fmt)
+        except Exception:
+            _logger.debug("Exception from file. {}".format(filename))
 
         # get class nodes - we need to leave only those which have URIs
         # blank nodes do not have URIs, we leave them for later

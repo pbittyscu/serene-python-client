@@ -211,7 +211,7 @@ class BaseSemantic(object):
         including the original
         """
         if node is None:
-            raise StopIteration
+            return
         else:
             yield node
             yield from self._parent_chain(node.parent)

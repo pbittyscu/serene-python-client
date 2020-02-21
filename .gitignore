@@ -3,6 +3,7 @@
 dist/
 build/
 serene-python-client.egg-info/
+doc/
 
 __pycache__
 *.pyc

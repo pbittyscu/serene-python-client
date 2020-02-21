@@ -323,7 +323,8 @@ business_info_ssd = (sn
                      .link("Organization", "ceo", "Person")
                      .link("City", "state", "State"))
 
-business_info_ssd.show(outfile="businessInfo.dot")
+business_info_ssd.show()
+# outfile="businessInfo.dot"
 
 print()
 print("Displaying businessInfo.csv Semantic Source Description (SSD)")
@@ -546,26 +547,26 @@ for pred in predicted:
 # =======================
 
 print("the best is number 0!")
-print("Fixing birthdate column")
+print("Fixing DOB column")
 
 predicted_ssd = predicted[0].ssd
 predicted_ssd.show()
 
 print("Showing first guess...")
-input("Press any key to continue...")
+# input("Press any key to continue...")
 
-predicted_ssd.remove(Column("birthDate"))
-predicted_ssd.show()
+# predicted_ssd.remove(Column("DOB"))
+# predicted_ssd.show()
 
-print("Removing birth date assignment")
-input("Press any key to continue...")
+# print("Removing DOB assignment")
+# input("Press any key to continue...")
+#
+# predicted_ssd.map(Column("DOB"), DataNode(ClassNode("Person"), "birthDate"))
+# predicted_ssd.link("Person", "worksFor", "Organization")
+# predicted_ssd.show(outfile="personInfo.dot")
 
-predicted_ssd.map(Column("birthDate"), DataNode(ClassNode("Person"), "birthDate"))
-predicted_ssd.link("Person", "worksFor", "Organization")
-predicted_ssd.show(outfile="personInfo.dot")
-
-print("Adding correct birthdate node")
-input("Press any key to continue...")
+# print("Adding correct birthdate node")
+# input("Press any key to continue...")
 
 # =======================
 #
@@ -575,7 +576,10 @@ input("Press any key to continue...")
 
 new_ssd = sn.ssds.upload(predicted_ssd)
 octo = sn.octopii.update(octo.add(new_ssd))
-
+print(predicted_ssd.json)
+f = open("example_predicted_ssd.json", "a")
+f.write(predicted_ssd.json)
+f.close()
 # =======================
 #
 #  Step 9. Extract the mappings
