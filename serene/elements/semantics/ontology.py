@@ -680,5 +680,5 @@ class RDFWriter(object):
         self._build_links(g, ontology)
         self._build_data_nodes(g, ontology)
 
-        return g.serialize(format='turtle').decode("utf-8")
+        return g.serialize(format='turtle')
 
