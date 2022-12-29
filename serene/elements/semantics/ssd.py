@@ -613,7 +613,7 @@ class SSD(object):
 
     def _node_uri(self, node_id):
         """Get uri of the node in ssd"""
-        node = self._semantic_model._graph.node[node_id]["data"]
+        node = self._semantic_model._graph.nodes[node_id]["data"]
         if type(node) == Column:
             # for columns we return its name
             return node.name
@@ -822,11 +822,11 @@ class SSDGraph(object):
             edges = [v['edge_id'] for _, _, v in self._graph.edges(data=True)]
             index = max(edges) + 1 if len(edges) else 0
 
-        if i_s not in self._graph.node:
+        if i_s not in self._graph.nodes:
             msg = "Link failed. Could not find source node {} in semantic model".format(i_s)
             raise Exception(msg)
 
-        if i_d not in self._graph.node:
+        if i_d not in self._graph.nodes:
             msg = "Link failed. Could not find destination node {} in semantic model".format(i_d)
             raise Exception(msg)
 
@@ -914,7 +914,7 @@ class SSDGraph(object):
                 i = self._lookup[true_src]
                 j = self._lookup[true_dst]
 
-                if len(self._graph.edge[i][j]) == 1:
+                if len(self._graph.adj[i][j]) == 1:
                     # remove the edge and its adjacent links if only one
                     self._graph.remove_edge(true_src, true_dst, 0)
 
@@ -954,17 +954,17 @@ class SSDGraph(object):
 
     def node_data(self, node):
         """Helper function to return the data stored at the node"""
-        return self._graph.node[node][self.DATA_KEY]
+        return self._graph.nodes[node][self.DATA_KEY]
 
     def edge_data(self, src, dst, index=0):
         """Helper function to return the data stored on the edge"""
-        return self._graph.edge[src][dst][index][self.DATA_KEY]
+        return self._graph.adj[src][dst][index][self.DATA_KEY]
 
     def all_edge_data(self, src, dst):
         """Helper function to return all the data stored on the edge"""
-        if src in self._graph.edge and dst in self._graph.edge[src]:
+        if src in self._graph.adj and dst in self._graph.adj[src]:
 
-            z = self._graph.edge[src][dst]
+            z = self._graph.adj[src][dst]
             return [z[i][self.DATA_KEY] for i in range(len(z))
                     if z[i] is not None and
                     z[i][self.DATA_KEY] is not None]
@@ -992,7 +992,7 @@ class SSDGraph(object):
     @property
     def _edge_list(self):
         """helper function to return 4-tuple of (x, y, key, item)"""
-        edge_dicts = [(e1, e2, self._graph.edge[e1][e2]) for e1, e2 in self._graph.edges()]
+        edge_dicts = [(e1, e2, self._graph.adj[e1][e2]) for e1, e2 in self._graph.edges()]
 
         # flatten out to (e1, e2, key, value)
         arr = []
@@ -1028,7 +1028,7 @@ class SSDGraph(object):
         Helper function to extract all the attribute maps. Note that a multigraph has
         a dictionary at each edge[x][y] point, so we need to pull out each edge.
         """
-        return flatten(self._graph.edge[e1][e2].values() for e1, e2 in self._graph.edges())
+        return flatten(self._graph.adj[e1][e2].values() for e1, e2 in self._graph.edges())
 
     def _edge_data_filter(self, value_type: SSDLink):
         """
@@ -1163,7 +1163,7 @@ class SSDReader(object):
 
             if obj['type'] in {"DataPropertyLink", "ClassInstanceLink"}:
                 # first we create the data node...
-                class_node = self._graph.graph.node[src]['data']
+                class_node = self._graph.graph.nodes[src]['data']
                 data_node = DataNode(class_node, label, prefix=prefix)
                 dn_table[data_node].append((src, dst, index, obj['type']))
 

@@ -97,11 +97,11 @@ class Mapping(object):
             raise TypeError("DataNode type required for 'node' in Mapping object")
 
         self.column = column
-        self.node = node
+        self.nodes = node
         self.predicted = predicted
 
     def __repr__(self):
-        s = "{} -> {}".format(self.column, self.node)
+        s = "{} -> {}".format(self.column, self.nodes)
 
         # we add an asterix to denote predicted values...
         if self.predicted:

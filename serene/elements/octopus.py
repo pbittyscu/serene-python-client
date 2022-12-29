@@ -316,9 +316,9 @@ class Octopus(object):
             cur_id += 1
             if link["type"] in ["DataPropertyLink", "ClassInstanceLink"]:
                 # change data nodes
-                g.node[node_map[target]]["label"] = g.node[node_map[source]]["label"] + "---" + link_data["label"]
-                g.node[node_map[target]]["lab"] = g.node[node_map[source]]["lab"] + "---" + link_data["label"]
-                g.node[node_map[target]]["prefix"] = g.node[node_map[source]]["prefix"]
+                g.nodes[node_map[target]]["label"] = g.nodes[node_map[source]]["label"] + "---" + link_data["label"]
+                g.nodes[node_map[target]]["lab"] = g.nodes[node_map[source]]["lab"] + "---" + link_data["label"]
+                g.nodes[node_map[target]]["prefix"] = g.nodes[node_map[source]]["prefix"]
 
         logging.info("Karma alignment graph read: {} nodes, {} links".format(g.number_of_nodes(), g.number_of_edges()))
         print("Karma alignment graph read: {} nodes, {} links".format(g.number_of_nodes(), g.number_of_edges()))

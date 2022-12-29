@@ -269,7 +269,7 @@ class SSDVisualizer(BaseVisualizer):
         # first add all the nodes
         for key in g.nodes():
             # extract the data objects from all nodes
-            node = g.node[key][self.struct.DATA_KEY]
+            node = g.nodes[key][self.struct.DATA_KEY]
             if type(node) in self.node_functions:
                 self.node_functions[type(node)](graph, key, node)
             else:
@@ -291,7 +291,7 @@ class SSDVisualizer(BaseVisualizer):
 
         # add the links
         for src, dst in g.edges():
-            for e in g.edge[src][dst].values():
+            for e in g.adj[src][dst].values():
                 link = e[self.struct.DATA_KEY]
                 if type(link) in self.link_functions:
                     self.link_functions[type(link)](graph, src, dst, link)

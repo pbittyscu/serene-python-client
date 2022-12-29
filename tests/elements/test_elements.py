@@ -221,41 +221,41 @@ class TestClassNode(unittest.TestCase):
         self.label = "Person"
         self.index = 1
         self.prefix = "http://namespace"
-        self.node = ClassNode(self.label, self.index, self.prefix)
+        self.nodes = ClassNode(self.label, self.index, self.prefix)
 
     def test_full_label(self):
-        self.assertEqual(self.node.full_label, self.label)
+        self.assertEqual(self.nodes.full_label, self.label)
 
     def test_label(self):
-        self.assertEqual(self.node.full_label, self.label)
+        self.assertEqual(self.nodes.full_label, self.label)
 
     def test_index(self):
-        self.assertEqual(self.node.index, self.index)
+        self.assertEqual(self.nodes.index, self.index)
 
     def test_prefix(self):
-        self.assertEqual(self.node.prefix, self.prefix)
+        self.assertEqual(self.nodes.prefix, self.prefix)
 
     def test_type(self):
-        self.assertEqual(self.node.type, "ClassNode")
+        self.assertEqual(self.nodes.type, "ClassNode")
 
     def test_repr(self):
         self.assertEqual(
-            repr(self.node),
+            repr(self.nodes),
             "ClassNode({}, {}, {})".format(
                 self.label, self.prefix, self.index))
 
     def test_ne(self):
-        self.assertNotEqual(self.node, ClassNode(self.label, 2, self.prefix))
+        self.assertNotEqual(self.nodes, ClassNode(self.label, 2, self.prefix))
 
     def test_eq(self):
         self.assertEqual(
-            self.node, ClassNode(self.label, self.index, self.prefix))
+            self.nodes, ClassNode(self.label, self.index, self.prefix))
 
     def test_hash(self):
         self.assertEqual(
-            hash(self.node),
+            hash(self.nodes),
             hash(
-                (self.index, self.label, str(self.prefix), type(self.node))
+                (self.index, self.label, str(self.prefix), type(self.nodes))
             )
         )
 
